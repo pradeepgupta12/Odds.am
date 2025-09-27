@@ -8,7 +8,7 @@ import offersData from '../data/offersData';
 import recommendOdds from '../data/recommendOdds';
 import topsureBets from '../data/topsureBets';
 import LiveScoreSection from "../pages/LiveScoreSection";
-import EventsAndTables from './EventsAndTables';
+import EventsAndTables from '../pages/EventsAndTables';
 
 const HomePage = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -64,11 +64,11 @@ const HomePage = () => {
   const currentMatch = oddshome.matches[currentMatchIndex];
 
   return (
-    <div className="min-h-screen pt-[120px]">
-      <div className="max-w-7xl mx-auto px-4 py-10 md:py-10 min-h-screen">
-        <div className="grid grid-cols-1 2xl:grid-cols-12 gap-6 min-h-screen overflow-visible">
+    <div className="pt-[120px]">
+      <div className="max-w-7xl mx-auto px-4 py-8 md:py-8 lg:py-10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
           {/* Main Content Area */}
-          <div className="2xl:col-span-9">
+          <div className="md:col-span-8 lg:col-span-9">
             {/* Main Match Card */}
             <div className="relative bg-transparent rounded-lg overflow-hidden shadow-xl mb-6 h-auto min-h-[300px] md:h-96">
               <div
@@ -342,119 +342,118 @@ const HomePage = () => {
             </div>
             {/* Top Sure Bets Section */}
             <div className="bg-white rounded-lg shadow-lg mt-6 overflow-hidden">
-              {/* Header */}
-              <div className="bg-gray-100 px-4 py-3">
-                <h3 className="text-lg font-bold text-gray-800">
-                  <span className="text-red-600">▶</span> TOP SURE BETS
-                </h3>
+  {/* Header */}
+  <div className="bg-gray-100 px-4 py-3">
+    <h3 className="text-lg font-bold text-gray-800">
+      <span className="text-red-600">▶</span> TOP SURE BETS
+    </h3>
+  </div>
+  {/* Sport Tabs */}
+  <div className="bg-gray-600 px-4 py-2 overflow-x-auto">
+    <div className="flex space-x-1 min-w-max">
+      {Object.keys(topsureBets).map((sport, index) => (
+        <button
+          key={sport}
+          onClick={() => setSelectedSport(sport)}
+          className={`px-3 py-1 text-sm font-medium rounded transition-colors whitespace-nowrap ${
+            selectedSport === sport ? 'bg-red-600 text-white' : 'text-gray-200 hover:bg-gray-500'
+          }`}
+        >
+          {sport}
+        </button>
+      ))}
+    </div>
+  </div>
+  {/* Table Container with Horizontal Scroll */}
+  <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+    <div className="min-w-[600px]">
+      {/* Table Header */}
+      <div className="grid grid-cols-12 gap-2 sm:gap-4 px-4 py-3 bg-gray-50 border-b text-[10px] sm:text-sm font-medium text-gray-500 uppercase">
+        <div className="col-span-3">Date & Time ▲</div>
+        <div className="col-span-3 text-center">Type of Bet ▲</div>
+        <div className="col-span-4 text-center">Bookmakers</div>
+        <div className="col-span-2 text-center">Return ▼</div>
+      </div>
+      {/* Table Rows */}
+      {topsureBets[selectedSport]?.map((bet, index) => {
+        const date = new Date(bet.dateTime);
+        const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const dateString = date.toDateString().includes(new Date().toDateString()) ? 'Today' : date.toLocaleDateString();
+        return (
+          <div
+            key={bet.id}
+            className="grid grid-cols-12 gap-2 sm:gap-4 px-4 py-4 border-b hover:bg-gray-50 transition-colors items-center"
+          >
+            {/* Date & Time + Teams Column */}
+            <div className="col-span-3">
+              <div className="text-[10px] sm:text-sm font-medium text-gray-900 mb-1">
+                {dateString}, {timeString}
               </div>
-              {/* Sport Tabs */}
-              <div className="bg-gray-600 px-4 py-2 overflow-x-auto">
-                <div className="flex space-x-1 min-w-max">
-                  {Object.keys(topsureBets).map((sport, index) => (
-                    <button
-                      key={sport}
-                      onClick={() => setSelectedSport(sport)}
-                      className={`px-3 py-1 text-sm font-medium rounded transition-colors whitespace-nowrap ${
-                        selectedSport === sport ? 'bg-red-600 text-white' : 'text-gray-200 hover:bg-gray-500'
-                      }`}
-                    >
-                      {sport}
-                    </button>
-                  ))}
-                  
-                </div>
-              </div>
-              {/* Table Container with Horizontal Scroll for Mobile */}
-              <div className="overflow-x-auto sm:overflow-x-visible">
-                <div className="min-w-[600px]">
-                  {/* Table Header */}
-                  <div className="grid grid-cols-12 gap-2 sm:gap-4 px-4 py-3 bg-gray-50 border-b text-xs sm:text-sm font-medium text-gray-500 uppercase">
-                    <div className="col-span-4 sm:col-span-3">Date & Time ▲</div>
-                    <div className="col-span-4 sm:col-span-3 text-center">Type of Bet ▲</div>
-                    <div className="col-span-4 sm:col-span-4 text-center"></div>
-                    <div className="hidden sm:block sm:col-span-2 text-center">Return ▼</div>
+              <div className="flex items-center space-x-1">
+                <div className="flex items-center space-x-1 flex-shrink-0">
+                  <div className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0">
+                    <img
+                      src={bet.homeLogo || '/placeholder-logo.jpg'}
+                      alt="Home Team Logo"
+                      className="w-full h-full object-contain rounded-full"
+                    />
                   </div>
-                  {/* Table Rows */}
-                  {topsureBets[selectedSport]?.map((bet, index) => {
-                    const date = new Date(bet.dateTime);
-                    const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                    const dateString = date.toDateString().includes(new Date().toDateString()) ? 'Today' : date.toLocaleDateString();
-                    return (
-                      <div
-                        key={bet.id}
-                        className="grid grid-cols-12 gap-2 sm:gap-4 px-4 py-4 border-b hover:bg-gray-50 transition-colors items-center"
-                      >
-                        {/* Date & Time + Teams Column */}
-                        <div className="col-span-4 sm:col-span-3">
-                          <div className="text-xs sm:text-sm font-medium text-gray-900 mb-1">
-                            {dateString}, {timeString}
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <div className="flex items-center space-x-1">
-                              <div className="w-5 h-5 flex-shrink-0">
-                                <img
-                                  src={bet.homeLogo || '/placeholder-logo.jpg'}
-                                  alt="Home Team Logo"
-                                  className="w-full h-full object-contain rounded-full"
-                                />
-                              </div>
-                              <div className="w-5 h-5 flex-shrink-0">
-                                <img
-                                  src={bet.awayLogo || '/placeholder-logo.jpg'}
-                                  alt="Away Team Logo"
-                                  className="w-full h-full object-contain rounded-full"
-                                />
-                              </div>
-                            </div>
-                            <div className="min-w-0">
-                              <div className="text-xs text-gray-700 truncate">
-                                {bet.homeTeam} – {bet.awayTeam}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        {/* Type of Bet Column */}
-                        <div className="col-span-4 sm:col-span-3 text-center">
-                          <div className="text-xs sm:text-sm font-medium text-gray-900">
-                            {bet.typeOfBet}
-                          </div>
-                        </div>
-                        {/* Bookmakers Column */}
-                        <div className="col-span-4 sm:col-span-4">
-                          <div className="flex justify-center sm:justify-start items-center space-x-1 sm:space-x-2">
-                            {bet.bookmakers.map((bookmaker, bmIndex) => (
-                              <div key={bmIndex} className="flex items-center space-x-1">
-                                <div className="w-10 h-10 flex-shrink-0">
-                                  <img
-                                    src={bookmaker.logo || '/placeholder-logo.jpg'}
-                                    alt={`${bookmaker.name} Logo`}
-                                    className="w-full h-full object-contain rounded-full"
-                                  />
-                                </div>
-                                <div className="text-xs sm:text-sm font-bold text-gray-900">
-                                  {bookmaker.odds}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        {/* Return Column */}
-                        <div className="hidden sm:block sm:col-span-2 text-center">
-                          <div className="bg-red-600 text-white px-2 py-1 rounded text-xs font-bold inline-block">
-                            {bet.returnPercent}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
+                  <div className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0">
+                    <img
+                      src={bet.awayLogo || '/placeholder-logo.jpg'}
+                      alt="Away Team Logo"
+                      className="w-full h-full object-contain rounded-full"
+                    />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[10px] sm:text-xs text-gray-700 truncate">
+                    {bet.homeTeam} – {bet.awayTeam}
+                  </div>
                 </div>
               </div>
             </div>
+            {/* Type of Bet Column */}
+            <div className="col-span-3 text-center">
+              <div className="text-[10px] sm:text-sm font-medium text-gray-900">
+                {bet.typeOfBet}
+              </div>
+            </div>
+            {/* Bookmakers Column */}
+            <div className="col-span-4">
+              <div className="flex justify-center sm:justify-start items-center space-x-1 flex-wrap">
+                {bet.bookmakers.map((bookmaker, bmIndex) => (
+                  <div key={bmIndex} className="flex items-center space-x-1 min-w-[70px] sm:min-w-[80px] my-1">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0">
+                      <img
+                        src={bookmaker.logo || '/placeholder-logo.jpg'}
+                        alt={`${bookmaker.name} Logo`}
+                        className="w-full h-full object-contain rounded-full"
+                      />
+                    </div>
+                    <div className="text-[10px] sm:text-sm font-bold text-gray-900">
+                      {bookmaker.odds}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Return Column */}
+            <div className="col-span-2 text-center">
+              <div className="bg-red-600 text-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold inline-block">
+                {bet.returnPercent}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</div>
           </div>
           {/* Right Sidebar */}
-          <div className="2xl:col-span-3 min-h-screen h-full">
-            <div className="sticky top-[10px] space-y-6">
+          <div className="md:col-span-4 lg:col-span-3">
+            <div className="sticky top-[120px]">
               <div className="rounded-lg p-6 shadow-2xl">
                 <h4 className="text-lg text-black font-bold mb-2">Advertisement</h4>
                 <p className="text-sm text-black opacity-90 mb-4">Place your ad content here.</p>
@@ -470,7 +469,7 @@ const HomePage = () => {
                 </a>
               </div>
               {/* Betting Contest */}
-              <div className="bg-teal-600 rounded-lg text-white overflow-hidden shadow-lg text-sm leading-tight">
+              <div className="bg-teal-600 rounded-lg text-white overflow-hidden shadow-lg text-sm leading-tight mt-6">
                 <div className="bg-teal-700 px-6 py-4 text-center">
                   <div className="w-10 h-10 mx-auto mb-2">
                     <img src="/contest-logo.jpg" alt="Contest Logo" className="w-full h-full object-contain rounded-full" />
@@ -515,8 +514,8 @@ const HomePage = () => {
                 </div>
               </div>
 
-              <LiveScoreSection/>
-              <EventsAndTables/>
+              <LiveScoreSection />
+              <EventsAndTables />
             </div>
           </div>
         </div>
@@ -526,3 +525,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
