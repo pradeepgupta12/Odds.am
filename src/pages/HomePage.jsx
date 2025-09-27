@@ -66,7 +66,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen pt-[120px]">
       <div className="max-w-7xl mx-auto px-4 py-10 md:py-10 min-h-screen">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-screen overflow-visible">
+        <div className="grid grid-cols-1 2xl:grid-cols-12 gap-6 min-h-screen overflow-visible">
           {/* Main Content Area */}
           <div className="2xl:col-span-9">
             {/* Main Match Card */}
