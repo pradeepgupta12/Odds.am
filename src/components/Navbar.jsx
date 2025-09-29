@@ -188,6 +188,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Menu, X, User } from 'lucide-react';
 import { navbarData } from '../data/navbarData.js';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -239,8 +240,8 @@ export default function Navbar() {
 
             {/* Logo */}
             <div className="text-4xl font-bold">
-              <span className="text-white">ODDS</span>
-              <span className="text-red-500">.am</span>
+              <Link to="/" className="text-white">ODDS</Link>
+              <Link to="/" className="text-red-500">.am</Link>
             </div>
 
             {/* Top Events Banner and Circles */}
@@ -331,17 +332,17 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto h-full flex items-center justify-between">
           {/* Navigation Links */}
           <div className="hidden lg:flex items-center space-x-2 h-full">
-            <a href="#" className="text-white hover:text-red-400 font-semibold text-lg">LIVE ODDS</a>
+            <Link to="/live-odds" className="text-white hover:text-red-400 font-semibold text-lg">LIVE ODDS</Link>
             <span className="text-gray-500 text-lg">/</span>
-            <a href="#" className="text-white hover:text-red-400 font-semibold text-lg">UPCOMING MATCHES</a>
+            <Link to="Upcoming-match" className="text-white hover:text-red-400 font-semibold text-lg">UPCOMING MATCHES</Link>
             <span className="text-gray-500 text-lg">/</span>
-            <a href="#" className="text-white hover:text-red-400 font-semibold text-lg">BETTING CONTEST</a>
+            <Link to="Betting-contest" className="text-white hover:text-red-400 font-semibold text-lg">BETTING CONTEST</Link>
             <span className="text-gray-500 text-lg">/</span>
-            <a href="#" className="text-white hover:text-red-400 font-semibold text-lg">SURE BETS</a>
+            <Link to="/Sure-bets" className="text-white hover:text-red-400 font-semibold text-lg">SURE BETS</Link>
             <span className="text-gray-500 text-lg">/</span>
-            <a href="#" className="text-white hover:text-red-400 font-semibold text-lg">BOOKMAKERS</a>
+            <Link to="/Book-maker" className="text-white hover:text-red-400 font-semibold text-lg">BOOKMAKERS</Link>
             <span className="text-gray-500 text-lg">/</span>
-            <a href="#" className="text-white hover:text-red-400 font-semibold text-lg">RESULTS</a>
+            <Link to="/Result" className="text-white hover:text-red-400 font-semibold text-lg">RESULTS</Link>
             <span className="text-gray-500 text-lg">/</span>
             <a href="#" className="text-white hover:text-red-400 font-semibold text-lg">TIPS</a>
             <span className="text-gray-500 text-lg">/</span>
