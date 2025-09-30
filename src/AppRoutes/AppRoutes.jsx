@@ -10,6 +10,8 @@ import BettingContest from "../pages/BettingContest";
 import SureBets from "../pages/SureBets";
 import BookMaker from "../pages/BookMaker";
 import Result from "../pages/Result";
+import FAQPage from "../pages/FAQPage";
+import TipsPage from "../pages/TipsPage";
 
 const AppRoutes = () => {
   return (
@@ -23,6 +25,9 @@ const AppRoutes = () => {
          <Route path="/Sure-bets" element={<SureBets/>} />
          <Route path="/Book-maker" element={<BookMaker/>} />
          <Route path="/Result" element={<Result/>} />
+         <Route path="/Faq" element={<FAQPage/>} />
+         <Route path="/Tips" element={<TipsPage/>} />
+         
         {/* yaha aur pages add kar sakte ho */}
       </Routes>
       <Footer />

@@ -344,9 +344,9 @@ export default function Navbar() {
             <span className="text-gray-500 text-lg">/</span>
             <Link to="/Result" className="text-white hover:text-red-400 font-semibold text-lg">RESULTS</Link>
             <span className="text-gray-500 text-lg">/</span>
-            <a href="#" className="text-white hover:text-red-400 font-semibold text-lg">TIPS</a>
+            <Link to="/Tips" className="text-white hover:text-red-400 font-semibold text-lg">TIPS</Link>
             <span className="text-gray-500 text-lg">/</span>
-            <a href="#" className="text-white hover:text-red-400 font-semibold text-lg">FAQ</a>
+            <Link to="/Faq" className="text-white hover:text-red-400 font-semibold text-lg">FAQ</Link>
           </div>
 
           {/* Search Bar (Mobile and Desktop) */}
