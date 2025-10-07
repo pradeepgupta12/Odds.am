@@ -1,3 +1,5 @@
+
+
 const topsureBets = {
   "Football": [
     {
@@ -8,11 +10,12 @@ const topsureBets = {
       "homeLogo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM2mG_ms1DGcjatAaPVr3wNheVFHIRXwEf1g&s",
       "awayLogo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM2mG_ms1DGcjatAaPVr3wNheVFHIRXwEf1g&s",
       "typeOfBet": "3 Way",
-      "bookmakers": [
-        { "name": "betboro", "odds": 4.5, "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSExXCBa4Xl3iMlKJ4dHRdEbTI7dj1Y6gQ91Q&s" },
-        { "name": "betboro-2", "odds": 4.6, "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSExXCBa4Xl3iMlKJ4dHRdEbTI7dj1Y6gQ91Q&s" },
-        { "name": "pin-up", "odds": 2.44, "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSExXCBa4Xl3iMlKJ4dHRdEbTI7dj1Y6gQ91Q&s" }
+      "bookmakers": [ 
+        { "name": "betboro", "odds": 4.5, "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSExXCBa4Xl3iMlKJ4dHRdEbTI7dj1Y6gQ91Q&s", "website": "https://megapari.com" },
+        { "name": "betboro-2", "odds": 4.6, "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSExXCBa4Xl3iMlKJ4dHRdEbTI7dj1Y6gQ91Q&s", "website": "https://megapari.com" },
+        { "name": "pin-up", "odds": 2.44, "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSExXCBa4Xl3iMlKJ4dHRdEbTI7dj1Y6gQ91Q&s", "website": "https://megapari.com" }
       ],
+      
       "returnPercent": "17.7%"
     },
     {
@@ -24,9 +27,9 @@ const topsureBets = {
       "awayLogo": "https://assets.example.com/logos/malavan.png",
       "typeOfBet": "3 Way",
       "bookmakers": [
-        { "name": "cloudbet", "odds": 1.42, "logo": "https://assets.example.com/bookmakers/cloudbet.png" },
-        { "name": "lsbet", "odds": 4.6, "logo": "https://assets.example.com/bookmakers/lsbet.png" },
-        { "name": "pin-up", "odds": 19.0, "logo": "https://assets.example.com/bookmakers/pinup.png" }
+        { "name": "cloudbet", "odds": 1.42, "logo": "https://assets.example.com/bookmakers/cloudbet.png", "website": "https://megapari.com" },
+        { "name": "lsbet", "odds": 4.6, "logo": "https://assets.example.com/bookmakers/lsbet.png", "website": "https://megapari.com" },
+        { "name": "pin-up", "odds": 19.0, "logo": "https://assets.example.com/bookmakers/pinup.png", "website": "https://megapari.com" }
       ],
       "returnPercent": "2.6%"
     }
@@ -42,8 +45,8 @@ const topsureBets = {
       "awayLogo": "https://assets.example.com/logos/lulea.png",
       "typeOfBet": "Moneyline",
       "bookmakers": [
-        { "name": "bet365", "odds": 2.1, "logo": "https://assets.example.com/bookmakers/bet365.png" },
-        { "name": "pinnacle", "odds": 2.15, "logo": "https://assets.example.com/bookmakers/pinnacle.png" }
+        { "name": "bet365", "odds": 2.1, "logo": "https://assets.example.com/bookmakers/bet365.png", "website": "https://megapari.com" },
+        { "name": "pinnacle", "odds": 2.15, "logo": "https://assets.example.com/bookmakers/pinnacle.png", "website": "https://megapari.com" }
       ],
       "returnPercent": "8.4%"
     },
@@ -56,8 +59,8 @@ const topsureBets = {
       "awayLogo": "https://assets.example.com/logos/hv71.png",
       "typeOfBet": "Over/Under",
       "bookmakers": [
-        { "name": "williamhill", "odds": 1.85, "logo": "https://assets.example.com/bookmakers/willhill.png" },
-        { "name": "betfair", "odds": 1.9, "logo": "https://assets.example.com/bookmakers/betfair.png" }
+        { "name": "williamhill", "odds": 1.85, "logo": "https://assets.example.com/bookmakers/willhill.png", "website": "https://megapari.com" },
+        { "name": "betfair", "odds": 1.9, "logo": "https://assets.example.com/bookmakers/betfair.png", "website": "https://megapari.com" }
       ],
       "returnPercent": "5.2%"
     }
@@ -73,8 +76,8 @@ const topsureBets = {
       "awayLogo": "https://assets.example.com/logos/barcelona.png",
       "typeOfBet": "Point Spread",
       "bookmakers": [
-        { "name": "betway", "odds": 1.95, "logo": "https://assets.example.com/bookmakers/betway.png" },
-        { "name": "unibet", "odds": 2.0, "logo": "https://assets.example.com/bookmakers/unibet.png" }
+        { "name": "betway", "odds": 1.95, "logo": "https://assets.example.com/bookmakers/betway.png", "website": "https://megapari.com" },
+        { "name": "unibet", "odds": 2.0, "logo": "https://assets.example.com/bookmakers/unibet.png", "website": "https://megapari.com" }
       ],
       "returnPercent": "6.1%"
     },
@@ -87,8 +90,8 @@ const topsureBets = {
       "awayLogo": "https://assets.example.com/logos/celtics.png",
       "typeOfBet": "Moneyline",
       "bookmakers": [
-        { "name": "draftkings", "odds": 2.4, "logo": "https://assets.example.com/bookmakers/draftkings.png" },
-        { "name": "fanDuel", "odds": 2.35, "logo": "https://assets.example.com/bookmakers/fanduel.png" }
+        { "name": "draftkings", "odds": 2.4, "logo": "https://assets.example.com/bookmakers/draftkings.png", "website": "https://megapari.com" },
+        { "name": "fanDuel", "odds": 2.35, "logo": "https://assets.example.com/bookmakers/fanduel.png", "website": "https://megapari.com" }
       ],
       "returnPercent": "4.3%"
     }
@@ -104,8 +107,8 @@ const topsureBets = {
       "awayLogo": "https://assets.example.com/logos/alcaraz.png",
       "typeOfBet": "Match Winner",
       "bookmakers": [
-        { "name": "bet365", "odds": 1.7, "logo": "https://assets.example.com/bookmakers/bet365.png" },
-        { "name": "coral", "odds": 2.05, "logo": "https://assets.example.com/bookmakers/coral.png" }
+        { "name": "bet365", "odds": 1.7, "logo": "https://assets.example.com/bookmakers/bet365.png", "website": "https://megapari.com" },
+        { "name": "coral", "odds": 2.05, "logo": "https://assets.example.com/bookmakers/coral.png", "website": "https://megapari.com" }
       ],
       "returnPercent": "3.9%"
     },
@@ -118,8 +121,8 @@ const topsureBets = {
       "awayLogo": "https://assets.example.com/logos/gauff.png",
       "typeOfBet": "Match Winner",
       "bookmakers": [
-        { "name": "williamhill", "odds": 1.8, "logo": "https://assets.example.com/bookmakers/willhill.png" },
-        { "name": "betfair", "odds": 2.0, "logo": "https://assets.example.com/bookmakers/betfair.png" }
+        { "name": "williamhill", "odds": 1.8, "logo": "https://assets.example.com/bookmakers/willhill.png", "website": "https://megapari.com" },
+        { "name": "betfair", "odds": 2.0, "logo": "https://assets.example.com/bookmakers/betfair.png", "website": "https://megapari.com" }
       ],
       "returnPercent": "7.0%"
     }
@@ -135,8 +138,8 @@ const topsureBets = {
       "awayLogo": "https://assets.example.com/logos/poirier.png",
       "typeOfBet": "Method of Victory",
       "bookmakers": [
-        { "name": "betboro", "odds": 3.2, "logo": "https://assets.example.com/bookmakers/betboro.png" },
-        { "name": "pinnacle", "odds": 3.4, "logo": "https://assets.example.com/bookmakers/pinnacle.png" }
+        { "name": "betboro", "odds": 3.2, "logo": "https://assets.example.com/bookmakers/betboro.png", "website": "https://megapari.com" },
+        { "name": "pinnacle", "odds": 3.4, "logo": "https://assets.example.com/bookmakers/pinnacle.png", "website": "https://megapari.com" }
       ],
       "returnPercent": "9.5%"
     },
@@ -149,8 +152,8 @@ const topsureBets = {
       "awayLogo": "https://assets.example.com/logos/pereira.png",
       "typeOfBet": "Rounds",
       "bookmakers": [
-        { "name": "bet365", "odds": 2.75, "logo": "https://assets.example.com/bookmakers/bet365.png" },
-        { "name": "betway", "odds": 2.9, "logo": "https://assets.example.com/bookmakers/betway.png" }
+        { "name": "bet365", "odds": 2.75, "logo": "https://assets.example.com/bookmakers/bet365.png", "website": "https://megapari.com" },
+        { "name": "betway", "odds": 2.9, "logo": "https://assets.example.com/bookmakers/betway.png", "website": "https://megapari.com" }
       ],
       "returnPercent": "6.8%"
     }
@@ -166,8 +169,8 @@ const topsureBets = {
       "awayLogo": "https://assets.example.com/logos/psg_hand.png",
       "typeOfBet": "3 Way",
       "bookmakers": [
-        { "name": "unibet", "odds": 1.9, "logo": "https://assets.example.com/bookmakers/unibet.png" },
-        { "name": "betfair", "odds": 2.05, "logo": "https://assets.example.com/bookmakers/betfair.png" }
+        { "name": "unibet", "odds": 1.9, "logo": "https://assets.example.com/bookmakers/unibet.png", "website": "https://megapari.com" },
+        { "name": "betfair", "odds": 2.05, "logo": "https://assets.example.com/bookmakers/betfair.png", "website": "https://megapari.com" }
       ],
       "returnPercent": "4.9%"
     },
@@ -180,8 +183,8 @@ const topsureBets = {
       "awayLogo": "https://assets.example.com/logos/flensburg.png",
       "typeOfBet": "Over/Under",
       "bookmakers": [
-        { "name": "betsson", "odds": 1.88, "logo": "https://assets.example.com/bookmakers/betsson.png" },
-        { "name": "williamhill", "odds": 1.95, "logo": "https://assets.example.com/bookmakers/willhill.png" }
+        { "name": "betsson", "odds": 1.88, "logo": "https://assets.example.com/bookmakers/betsson.png", "website": "https://megapari.com" },
+        { "name": "williamhill", "odds": 1.95, "logo": "https://assets.example.com/bookmakers/willhill.png", "website": "https://megapari.com" }
       ],
       "returnPercent": "3.7%"
     }
@@ -197,9 +200,10 @@ const topsureBets = {
       "awayLogo": "https://assets.example.com/logos/bills.png",
       "typeOfBet": "Spread",
       "bookmakers": [
-        { "name": "bet365", "odds": 1.7, "logo": "https://assets.example.com/bookmakers/bet365.png" },
-        { "name": "pinnacle", "odds": 1.75, "logo": "https://assets.example.com/bookmakers/pinnacle.png" }
+        { "name": "bet365", "odds": 1.7, "logo": "https://assets.example.com/bookmakers/bet365.png", "website": "https://megapari.com" },
+        { "name": "pinnacle", "odds": 1.75, "logo": "https://assets.example.com/bookmakers/pinnacle.png", "website": "https://megapari.com" }
       ],
+      "website":"https://1xbit1.com",
       "returnPercent": "12.2%"
     },
     {
@@ -211,8 +215,8 @@ const topsureBets = {
       "awayLogo": "https://assets.example.com/logos/packers.png",
       "typeOfBet": "Moneyline",
       "bookmakers": [
-        { "name": "fanDuel", "odds": 2.05, "logo": "https://assets.example.com/bookmakers/fanduel.png" },
-        { "name": "draftkings", "odds": 2.1, "logo": "https://assets.example.com/bookmakers/draftkings.png" }
+        { "name": "fanDuel", "odds": 2.05, "logo": "https://assets.example.com/bookmakers/fanduel.png", "website": "https://megapari.com" },
+        { "name": "draftkings", "odds": 2.1, "logo": "https://assets.example.com/bookmakers/draftkings.png", "website": "https://megapari.com" }
       ],
       "returnPercent": "7.6%"
     }

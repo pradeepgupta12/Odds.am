@@ -1,6 +1,8 @@
 
 
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import { useNavigate } from 'react-router-dom';
 import oddshome from '../data/oddshome';
 import league from '../data/league';
 import { FaFootballBall } from 'react-icons/fa';
@@ -9,8 +11,8 @@ import recommendOdds from '../data/recommendOdds';
 import topsureBets from '../data/topsureBets';
 import LiveScoreSection from "../pages/LiveScoreSection";
 import EventsAndTables from '../pages/EventsAndTables';
-
 const HomePage = () => {
+  const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState({
     hours: oddshome.matches[0].countdown.hours,
     minutes: oddshome.matches[0].countdown.minutes,
@@ -19,12 +21,12 @@ const HomePage = () => {
   const [currentMatchIndex, setCurrentMatchIndex] = useState(0);
   const [selectedOffer, setSelectedOffer] = useState(offersData.offers.find(offer => offer.name === 'Dafabet')); // Default to Dafabet
   const [selectedSport, setSelectedSport] = useState('Football');
-
+  const [selectedCompetition, setSelectedCompetition] = useState(null);
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft(prevTime => {
         let { hours, minutes, seconds } = prevTime;
-      
+     
         if (seconds > 0) {
           seconds--;
         } else if (minutes > 0) {
@@ -60,469 +62,586 @@ const HomePage = () => {
       clearInterval(matchInterval);
     };
   }, [currentMatchIndex]);
-
   const currentMatch = oddshome.matches[currentMatchIndex];
-
+  const filteredMatches = selectedCompetition
+    ? league.matches.filter(match => match.competition === selectedCompetition)
+    : league.matches;
+  const handleMatchClick = (match) => {
+    const [homeTeam, awayTeam] = match.teams.split(' – ');
+    navigate(`/league-details/${encodeURIComponent(homeTeam.trim())}/${encodeURIComponent(awayTeam.trim())}`);
+  };
+  const handleMainMatchClick = (match) => {
+    const [homeTeam, awayTeam] = match.teams.split(' – ');
+    navigate(`/main-card-details/${encodeURIComponent(homeTeam.trim())}/${encodeURIComponent(awayTeam.trim())}`);
+  };
+  const handleRecommendedMatchClick = (index) => {
+    navigate(`/recommended-details/${index}`);
+  };
+  const handleSureBetClick = (bet) => {
+    navigate(`/sure-bet-details/${bet.id}`);
+  };
+  const handleBettingContestUserClick = (username) => {
+    navigate(`/betting-contest-details/${encodeURIComponent(username)}`);
+  };
   return (
-    <div className="pt-[120px]">
-      <div className="max-w-7xl mx-auto px-4 py-8 md:py-8 lg:py-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
-          {/* Main Content Area */}
-          <div className="md:col-span-8 lg:col-span-9">
-            {/* Main Match Card */}
-            <div className="relative bg-transparent rounded-lg overflow-hidden shadow-xl mb-6 h-auto min-h-[300px] md:h-96">
-              <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${currentMatch.background_image})`, backgroundSize: 'cover' }}
-              ></div>
-              <div className="absolute inset-0 bg-black/30"></div>
-            
-              <div className="relative z-10 p-4 sm:p-6 md:p-8 h-full flex flex-col justify-between">
-                <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6">
-                  <div className="text-white mb-4 md:mb-0">
-                    <div className="text-right md:text-left mb-2">
-                      <span className="bg-black/30 px-3 py-1 rounded text-xs sm:text-sm font-medium">
-                        {currentMatch.teams}. {currentMatch.competition}. {currentMatch.matchday}
-                      </span>
+    <>
+      <Helmet>
+        <html lang="en" />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Watchdogs.net - Live Odds, Betting Tips & Sure Bets | Football Matches</title>
+        <meta name="description" content="Discover live football odds, expert betting tips, sure bets, and upcoming matches on Watchdogs.net. Bet smart with our recommended odds and contests." />
+        <meta name="keywords" content="football odds, live betting, sure bets, betting tips, football predictions, Dafabet, betting contests" />
+        <meta name="author" content="Watchdogs Team" />
+        <link rel="canonical" href="https://watchdogs.net/" />
+        <link rel="icon" href="/favicon.ico" />
+        {/* Open Graph Tags */}
+        <meta property="og:title" content="Watchdogs.net - Live Odds, Betting Tips & Sure Bets | Football Matches" />
+        <meta property="og:description" content="Discover live football odds, expert betting tips, sure bets, and upcoming matches on Watchdogs.net. Bet smart with our recommended odds and contests." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://watchdogs.net/" />
+        <meta property="og:image" content="https://watchdogs.net/og-image.jpg" />
+        <meta property="og:image:alt" content="Watchdogs.net - Football Betting Odds and Tips" />
+        <meta property="og:site_name" content="Watchdogs.net" />
+        {/* Structured Data: WebSite Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Watchdogs.net",
+            "url": "https://watchdogs.net/",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://watchdogs.net/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            },
+            "sameAs": [
+              "https://twitter.com/watchdogsnet",
+              "https://facebook.com/watchdogsnet"
+            ]
+          })}
+        </script>
+        {/* Additional Schema for Organization */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Watchdogs.net",
+            "url": "https://watchdogs.net/",
+            "logo": "https://watchdogs.net/logo.jpg",
+            "description": "Your trusted source for live football odds, betting tips, and sure bets.",
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+1-123-456-7890",
+              "contactType": "customer service"
+            }
+          })}
+        </script>
+      </Helmet>
+      <div className="pt-[120px]">
+        <div className="max-w-7xl mx-auto px-4 py-8 md:py-8 lg:py-10">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
+            {/* Main Content Area */}
+            <div className="md:col-span-8 lg:col-span-9">
+              {/* Main Match Card */}
+              <div 
+                className="relative bg-transparent rounded-lg overflow-hidden shadow-xl mb-6 h-auto min-h-[300px] md:h-96 cursor-pointer hover:shadow-2xl transition-shadow"
+                onClick={() => handleMainMatchClick(currentMatch)}
+              >
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${currentMatch.background_image})`, backgroundSize: 'cover' }}
+                ></div>
+                <div className="absolute inset-0 bg-black/30"></div>
+             
+                <div className="relative z-10 p-4 sm:p-6 md:p-8 h-full flex flex-col justify-between">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6">
+                    <div className="text-white mb-4 md:mb-0">
+                      <div className="text-right md:text-left mb-2">
+                        <span className="bg-black/30 px-3 py-1 rounded text-xs sm:text-sm font-medium">
+                          {currentMatch.teams}. {currentMatch.competition}. {currentMatch.matchday}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-end flex-grow">
+                    <div className="text-white">
+                      <div className="mb-4">
+                        <span className="text-sm sm:text-lg md:text-xl font-medium">Match starts in </span>
+                        <div className="inline-flex items-baseline space-x-1">
+                          <span className="text-3xl sm:text-4xl md:text-6xl font-bold">{timeLeft.hours}</span>
+                          <span className="text-xl sm:text-2xl md:text-3xl font-medium">H.</span>
+                          <span className="text-3xl sm:text-4xl md:text-6xl font-bold">{timeLeft.minutes}</span>
+                          <span className="text-xl sm:text-2xl md:text-3xl font-medium">M.</span>
+                          <span className="text-3xl sm:text-4xl md:text-6xl font-bold">{timeLeft.seconds}</span>
+                          <span className="text-xl sm:text-2xl md:text-3xl font-medium">S.</span>
+                        </div>
+                      </div>
+                      <p className="text-sm sm:text-lg md:text-xl font-medium">{currentMatch.prediction}</p>
+                    </div>
+                    <div className="flex flex-wrap gap-3 justify-center lg:justify-end">
+                      {currentMatch.odds.map((odd, index) => {
+                        const imageSrc = odd.bookmaker_info.image_url.includes('[') ? '/placeholder-logo.jpg' : odd.bookmaker_info.image_url;
+                        return (
+                          <div key={index} className="text-center">
+                            <div className="bg-red-700 text-white px-2 sm:px-4 py-2 rounded-t font-bold text-lg sm:text-xl min-w-[50px] sm:min-w-[60px]">
+                              {odd.result}
+                            </div>
+                            <div className="bg-white text-red-700 px-2 sm:px-4 py-2 font-bold text-lg sm:text-xl border-x border-gray-200">
+                              {odd.value}
+                            </div>
+                            <div className="bg-gray-800 px-2 py-1 rounded-b h-6 flex items-center justify-center">
+                              <a
+                                href={odd.bookmaker_info.website_link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-center w-full h-full"
+                              >
+                                <img
+                                  src={imageSrc}
+                                  alt={odd.bookmaker_info.name}
+                                  className="max-h-full max-w-full object-contain rounded"
+                                />
+                              </a>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-end flex-grow">
-                  <div className="text-white">
-                    <div className="mb-4">
-                      <span className="text-sm sm:text-lg md:text-xl font-medium">Match starts in </span>
-                      <div className="inline-flex items-baseline space-x-1">
-                        <span className="text-3xl sm:text-4xl md:text-6xl font-bold">{timeLeft.hours}</span>
-                        <span className="text-xl sm:text-2xl md:text-3xl font-medium">H.</span>
-                        <span className="text-3xl sm:text-4xl md:text-6xl font-bold">{timeLeft.minutes}</span>
-                        <span className="text-xl sm:text-2xl md:text-3xl font-medium">M.</span>
-                        <span className="text-3xl sm:text-4xl md:text-6xl font-bold">{timeLeft.seconds}</span>
-                        <span className="text-xl sm:text-2xl md:text-3xl font-medium">S.</span>
+                <div className="absolute right-4 bottom-0 hidden md:block opacity-20">
+                  <div className="w-32 h-48 bg-gradient-to-t from-black/50 to-transparent rounded-t-full"></div>
+                </div>
+              </div>
+              {/* Other Matches */}
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <h3 className="text-xl font-bold mb-4 text-gray-800">Other Matches</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {oddshome.other_matches.map((match, index) => (
+                    <div key={index} className="flex items-center space-x-2 p-3 hover:bg-gray-50 rounded-lg transition-colors border border-gray-200 cursor-pointer" onClick={() => setCurrentMatchIndex(index )}>
+                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                      <span className="text-gray-800 font-medium text-sm uppercase tracking-wide">{match}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Competition Tabs */}
+              <div className="flex flex-wrap gap-4 mb-6">
+                <div
+                  className={`flex items-center space-x-2 bg-white rounded-full px-4 py-2 shadow-sm border hover:shadow-md transition-shadow cursor-pointer ${selectedCompetition === null ? 'ring-2 ring-blue-500' : ''}`}
+                  onClick={() => setSelectedCompetition(null)}
+                >
+                  <span className="text-sm font-medium text-gray-700">All</span>
+                </div>
+                {league.competitions.map((competition, index) => (
+                  <div
+                    key={index}
+                    className={`flex items-center space-x-2 bg-white rounded-full px-4 py-2 shadow-sm border hover:shadow-md transition-shadow cursor-pointer ${selectedCompetition === competition.name ? 'ring-2 ring-blue-500' : ''}`}
+                    onClick={() => setSelectedCompetition(competition.name)}
+                  >
+                    <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+                      <img src={competition.icon} alt={`${competition.name} Logo`} className="w-full h-full object-cover-contain rounded-full" />
+                    </div>
+                    <span className="text-sm font-medium text-gray-700">{competition.name}</span>
+                    <button className="w-5 h-5 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300">
+                      <FaFootballBall className="text-sm" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+              {/* Matches Table */}
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div className="grid grid-cols-12 gap-4 px-4 py-3 bg-gray-50 border-b text-xs sm:text-sm font-medium text-gray-600">
+                  <div className="col-span-2 sm:col-span-1">Time</div>
+                  <div className="col-span-6">Match</div>
+                  <div className="col-span-1 text-center">1</div>
+                  <div className="col-span-1 text-center">X</div>
+                  <div className="col-span-1 text-center">2</div>
+                  <div className="col-span-1 sm:col-span-2"></div>
+                </div>
+                {filteredMatches.map((match, index) => (
+                  <div
+                    key={index}
+                    className="group grid grid-cols-12 gap-4 px-4 py-3 border-b hover:bg-gray-50 transition-colors cursor-pointer"
+                    onClick={() => handleMatchClick(match)}
+                  >
+                    <div className="col-span-2 sm:col-span-1 text-xs sm:text-sm text-gray-600 font-medium">
+                      {match.time}
+                    </div>
+                    <div className="col-span-6">
+                      <div className="flex items-center space-x-3 sm:space-x-3">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-6 h-6 hidden sm:block">
+                            <img
+                              src={match.home_logo}
+                              alt="Home Logo"
+                              className="w-full h-full object-cover-contain rounded-full"
+                            />
+                          </div>
+                          <div className="w-6 h-6 hidden sm:block">
+                            <img
+                              src={match.away_logo}
+                              alt="Away Logo"
+                              className="w-full h-full object-cover-contain rounded-full"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-medium text-xs sm:text-sm text-gray-900 group-hover:text-blue-600 transition-colors">
+                            {match.teams}
+                          </div>
+                          <div className="flex items-center space-x-2 text-xs text-gray-500">
+                            <div className="w-4 h-4 bg-gray-200 rounded-full"></div>
+                            <span>{match.competition}. {match.matchday}</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <p className="text-sm sm:text-lg md:text-xl font-medium">{currentMatch.prediction}</p>
+                    <div className="col-span-1 text-center">
+                      <span className="text-xs sm:text-sm font-bold text-blue-600">
+                        {match.odds['1']}
+                      </span>
+                    </div>
+                    <div className="col-span-1 text-center">
+                      <span className="text-xs sm:text-sm font-bold text-blue-600">
+                        {match.odds['X']}
+                      </span>
+                    </div>
+                    <div className="col-span-1 text-center">
+                      <span className="text-xs sm:text-sm font-bold text-blue-600">
+                        {match.odds['2']}
+                      </span>
+                    </div>
+                    <div className="col-span-1 sm:col-span-2 flex items-center justify-end"></div>
                   </div>
-                  <div className="flex flex-wrap gap-3 justify-center lg:justify-end">
-                    {currentMatch.odds.map((odd, index) => (
-                      <div key={index} className="text-center">
-                        <div className="bg-red-700 text-white px-2 sm:px-4 py-2 rounded-t font-bold text-lg sm:text-xl min-w-[50px] sm:min-w-[60px]">
-                          {odd.result}
+                ))}
+              </div>
+              {/* Hot Offers Section */}
+              <div className="bg-white rounded-lg shadow-lg p-6 mt-6">
+                <h3 className="text-xl font-bold mb-4 text-gray-800">🔥 Today's Hot Offers</h3>
+                <div className="mb-4">
+                  <div className="bg-gray-200 max-w-5xl mx-auto px-4 py-2 rounded">
+                    {offersData.offers.map((offer, index) => (
+                      <span
+                        key={index}
+                        className="cursor-pointer text-blue-600 font-semibold hover:underline"
+                        onClick={() => setSelectedOffer(offer)}
+                      >
+                        {offer.name}
+                        {index < offersData.offers.length - 1 && " / "}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                {/* Single card that updates on click */}
+                <div className="p-4 bg-white border border-gray-300 rounded-lg shadow-md">
+                  <div className="flex items-start">
+                    <img
+                      src={selectedOffer.logo}
+                      alt={`${selectedOffer.name} Logo`}
+                      className="w-32 h-32 object-contain rounded-lg mr-6"
+                    />
+                    <p className="text-sm text-gray-600 leading-relaxed">{selectedOffer.description}</p>
+                  </div>
+                </div>
+              </div>
+              {/* Recommended Odds Section */}
+              <div className="bg-white rounded-lg shadow-lg mt-6 overflow-hidden">
+                {/* Header */}
+                <div className="bg-gray-100 px-4 py-3">
+                  <h3 className="text-lg font-bold text-gray-800">
+                    <span className="text-red-600">▶</span> RECOMMENDED ODDS
+                  </h3>
+                </div>
+                {/* Table Header */}
+                <div className="grid grid-cols-12 gap-2 sm:gap-4 px-4 py-3 bg-gray-50 border-b text-xs sm:text-sm font-medium text-gray-500 uppercase">
+                  <div className="col-span-6 sm:col-span-3">Match</div>
+                  <div className="col-span-6 sm:col-span-3 text-center">Recommended Odd ▲</div>
+                  <div className="hidden sm:block sm:col-span-3 text-center">Bookmaker ▲</div>
+                  <div className="hidden sm:block sm:col-span-3 text-center">Starts In ▲</div>
+                </div>
+                {/* Table Rows */}
+                {recommendOdds.map((item, index) => (
+                  <div
+                    key={index}
+                    className="grid grid-cols-12 gap-2 sm:gap-4 px-4 py-4 border-b hover:bg-gray-50 transition-colors items-center"
+                  >
+                    {/* Match Column */}
+                    <div className="col-span-6 sm:col-span-3">
+                      <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-1">
+                          <div className="w-6 h-6 flex-shrink-0">
+                            <img
+                              src={item.matchLogos?.[0] || '/placeholder-logo.jpg'}
+                              alt="Team 1 Logo"
+                              className="w-full h-full object-contain rounded-full"
+                            />
+                          </div>
+                          <div className="w-6 h-6 flex-shrink-0">
+                            <img
+                              src={item.matchLogos?.[1] || '/placeholder-logo.jpg'}
+                              alt="Team 2 Logo"
+                              className="w-full h-full object-contain rounded-full"
+                            />
+                          </div>
                         </div>
-                        <div className="bg-white text-red-700 px-2 sm:px-4 py-2 font-bold text-lg sm:text-xl border-x border-gray-200">
-                          {odd.value}
+                        <div className="min-w-0">
+                          <div
+                            className="font-medium text-xs sm:text-sm text-gray-900 truncate hover:text-blue-600 cursor-pointer transition-colors"
+                            onClick={() => handleRecommendedMatchClick(index)}
+                          >
+                            {item.match}
+                          </div>
+                          <div className="flex items-center space-x-1 text-xs text-gray-500">
+                            <div className="w-3 h-3 bg-gray-300 rounded-full flex-shrink-0"></div>
+                            <span className="truncate">{item.competition}</span>
+                          </div>
                         </div>
-                        <div className="bg-gray-800 text-white px-2 py-1 text-xs font-semibold rounded-b uppercase">
-                          {odd.bookmaker}
+                      </div>
+                    </div>
+                    {/* Recommended Odd Column */}
+                    <div className="col-span-6 sm:col-span-3 text-center">
+                      <div className="flex items-center justify-center space-x-2">
+                        <div className="bg-red-600 text-white px-2 py-1 rounded text-sm font-bold min-w-[40px]">
+                          {item.recommendedOdd.value}
+                        </div>
+                        <div className="bg-green-600 text-white px-2 py-1 rounded text-xs font-medium">
+                          +
+                        </div>
+                      </div>
+                      <div className="text-xs text-gray-600 mt-1 truncate">
+                        {item.recommendedOdd.type}
+                      </div>
+                    </div>
+                    {/* Bookmaker Column */}
+                    <div className="hidden sm:block sm:col-span-3 text-center">
+                      <div className="flex flex-col items-center space-y-1">
+                        <div className="w-12 h-6 flex-shrink-0 flex justify-center">
+                          <a
+                            href={item.bookmaker?.website || '#'}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <img
+                              src={item.bookmaker?.logo || '/placeholder-logo.jpg'}
+                              alt={`${item.bookmaker?.name || 'Bookmaker'} Logo`}
+                              className="w-full h-full object-contain rounded cursor-pointer"
+                            />
+                          </a>
+                        </div>
+                        <div className="text-sm font-bold text-gray-900">
+                          {item.bookmaker.odd}
+                        </div>
+                      </div>
+                    </div>
+                    {/* Starts In Column */}
+                    <div className="hidden sm:block sm:col-span-3 text-center text-xs sm:text-sm text-gray-600">
+                      <div className="font-medium">
+                        {item.startsIn.split(' ').map((word, i) => (
+                          <div key={i} className="leading-tight">
+                            {word}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {/* Top Sure Bets Section */}
+              <div className="bg-white rounded-lg shadow-lg mt-6 overflow-hidden">
+                {/* Header */}
+                <div className="bg-gray-100 px-4 py-3">
+                  <h3 className="text-lg font-bold text-gray-800">
+                    <span className="text-red-600">▶</span> TOP SURE BETS
+                  </h3>
+                </div>
+                {/* Sport Tabs */}
+                <div className="bg-gray-600 px-4 py-2 overflow-x-auto">
+                  <div className="flex space-x-1 min-w-max">
+                    {Object.keys(topsureBets).map((sport, index) => (
+                      <button
+                        key={sport}
+                        onClick={() => setSelectedSport(sport)}
+                        className={`px-3 py-1 text-sm font-medium rounded transition-colors whitespace-nowrap ${
+                          selectedSport === sport ? 'bg-red-600 text-white' : 'text-gray-200 hover:bg-gray-500'
+                        }`}
+                      >
+                        {sport}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                {/* Table Container with Horizontal Scroll */}
+                <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+                  <div className="min-w-[600px]">
+                    {/* Table Header */}
+                    <div className="grid grid-cols-12 gap-2 sm:gap-4 px-4 py-3 bg-gray-50 border-b text-[10px] sm:text-sm font-medium text-gray-500 uppercase">
+                      <div className="col-span-3">Date & Time ▲</div>
+                      <div className="col-span-3 text-center">Type of Bet ▲</div>
+                      <div className="col-span-4 text-center">Bookmakers</div>
+                      <div className="col-span-2 text-center">Return ▼</div>
+                    </div>
+                    {/* Table Rows */}
+                    {topsureBets[selectedSport]?.map((bet, index) => {
+                      const date = new Date(bet.dateTime);
+                      const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                      const dateString = date.toDateString().includes(new Date().toDateString()) ? 'Today' : date.toLocaleDateString();
+                      return (
+                        <div
+                          key={bet.id}
+                          className="grid grid-cols-12 gap-2 sm:gap-4 px-4 py-4 border-b hover:bg-gray-50 transition-colors items-center"
+                        >
+                          {/* Date & Time + Teams Column */}
+                          <div className="col-span-3">
+                            <div className="text-[10px] sm:text-sm font-medium text-gray-900 mb-1">
+                              {dateString}, {timeString}
+                            </div>
+                            <div className="flex items-center space-x-1">
+                              <div className="flex items-center space-x-1 flex-shrink-0">
+                                <div className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0">
+                                  <img
+                                    src={bet.homeLogo || '/placeholder-logo.jpg'}
+                                    alt="Home Team Logo"
+                                    className="w-full h-full object-contain rounded-full"
+                                  />
+                                </div>
+                                <div className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0">
+                                  <img
+                                    src={bet.awayLogo || '/placeholder-logo.jpg'}
+                                    alt="Away Team Logo"
+                                    className="w-full h-full object-contain rounded-full"
+                                  />
+                                </div>
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <div
+                                  className="text-[10px] sm:text-xs text-gray-700 truncate hover:text-blue-600 cursor-pointer transition-colors"
+                                  onClick={() => handleSureBetClick(bet)}
+                                >
+                                  {bet.homeTeam} – {bet.awayTeam}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          {/* Type of Bet Column */}
+                          <div className="col-span-3 text-center">
+                            <div className="text-[10px] sm:text-sm font-medium text-gray-900">
+                              {bet.typeOfBet}
+                            </div>
+                          </div>
+                          {/* Bookmakers Column */}
+                          <div className="col-span-4">
+                            <div className="flex justify-center sm:justify-start items-center space-x-1 flex-wrap">
+                              {bet.bookmakers.map((bookmaker, bmIndex) => (
+                                <div key={bmIndex} className="flex items-center space-x-1 min-w-[70px] sm:min-w-[80px] my-1">
+                                  <div className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0">
+                                    <a
+                                      href={bookmaker.website || '#'}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                    >
+                                      <img
+                                        src={bookmaker.logo || '/placeholder-logo.jpg'}
+                                        alt={`${bookmaker.name} Logo`}
+                                        className="w-full h-full object-contain rounded-full cursor-pointer"
+                                      />
+                                    </a>
+                                  </div>
+                                  <div className="text-[10px] sm:text-sm font-bold text-gray-900">
+                                    {bookmaker.odds}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          {/* Return Column */}
+                          <div className="col-span-2 text-center">
+                            <div className="bg-red-600 text-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold inline-block">
+                              {bet.returnPercent}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Right Sidebar */}
+            <div className="md:col-span-4 lg:col-span-3">
+              <div className="sticky top-[120px]">
+                <div className="rounded-lg p-6 shadow-2xl">
+                  <h4 className="text-lg text-black font-bold mb-2">Advertisement</h4>
+                  <p className="text-sm text-black opacity-90 mb-4">Place your ad content here.</p>
+                  <a href="https://example.com" target="_blank" rel="noopener noreferrer">
+                    <div className="w-full h-48 bg-gray-300 rounded flex items-center justify-center cursor-pointer">
+                      <span className="text-gray-500">Ad Image Placeholder</span>
+                    </div>
+                  </a>
+                  <a href="https://example.com" target="_blank" rel="noopener noreferrer">
+                    <button className="w-full bg-white text-blue-600 font-bold py-2 px-4 rounded hover:bg-gray-100 transition-colors mt-4">
+                      Click Here
+                    </button>
+                  </a>
+                </div>
+                {/* Betting Contest */}
+                <div className="bg-teal-600 rounded-lg text-white overflow-hidden shadow-lg text-sm leading-tight mt-6">
+                  <div className="bg-teal-700 px-6 py-4 text-center">
+                    <div className="w-10 h-10 mx-auto mb-2">
+                      <img src="/contest-logo.jpg" alt="Contest Logo" className="w-full h-full object-contain rounded-full" />
+                    </div>
+                    <h3 className="font-bold text-lg">{league.betting_contest.title}</h3>
+                    <p className="text-sm opacity-90">{league.betting_contest.subtitle}</p>
+                  </div>
+                  <div className="p-3">
+                    {league.betting_contest.ranking.map((user, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between py-3 border-b border-teal-500/30 last:border-b-0 hover:text-blue-900 cursor-pointer transition-colors"
+                        onClick={() => handleBettingContestUserClick(user.username)}
+                      >
+                        <div className="flex items-center space-x-3">
+                          <div className="w-8 h-8 flex items-center justify-center">
+                            <span className="text-2xl font-bold">{user.position}</span>
+                          </div>
+                          <div className="w-10 h-10">
+                            <img src={user.flag || '/placeholder-logo.jpg'} alt="User Flag" className="w-full h-full object-contain rounded-full" />
+                          </div>
+                          <div>
+                            <div className="font-medium text-sm">{user.username}</div>
+                            {user.country && (
+                              <div className="text-xs opacity-75 flex items-center space-x-1">
+                                <span>🇺🇦</span>
+                                <span>{user.country}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold mb-1">
+                            {user.prize}
+                          </div>
+                          <div className="text-xs opacity-90">{user.points.toLocaleString()}</div>
                         </div>
                       </div>
                     ))}
                   </div>
-                </div>
-              </div>
-              <div className="absolute right-4 bottom-0 hidden md:block opacity-20">
-                <div className="w-32 h-48 bg-gradient-to-t from-black/50 to-transparent rounded-t-full"></div>
-              </div>
-            </div>
-            {/* Other Matches */}
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-xl font-bold mb-4 text-gray-800">Other Matches</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                {oddshome.other_matches.map((match, index) => (
-                  <div key={index} className="flex items-center space-x-2 p-3 hover:bg-gray-50 rounded-lg transition-colors border border-gray-200">
-                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                    <span className="text-gray-800 font-medium text-sm uppercase tracking-wide">{match}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            {/* Competition Tabs */}
-            <div className="flex flex-wrap gap-4 mb-6">
-              {league.competitions.map((competition, index) => (
-                <div
-                  key={index}
-                  className="flex items-center space-x-2 bg-white rounded-full px-4 py-2 shadow-sm border hover:shadow-md transition-shadow cursor-pointer"
-                >
-                  <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-                    <img src={competition.icon} alt={`${competition.name} Logo`} className="w-full h-full object-cover-contain rounded-full" />
-                  </div>
-                  <span className="text-sm font-medium text-gray-700">{competition.name}</span>
-                  <button className="w-5 h-5 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300">
-                    <FaFootballBall className="text-sm" />
-                  </button>
-                </div>
-              ))}
-            </div>
-            {/* Matches Table */}
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="grid grid-cols-12 gap-4 px-4 py-3 bg-gray-50 border-b text-xs sm:text-sm font-medium text-gray-600">
-                <div className="col-span-2 sm:col-span-1">Time</div>
-                <div className="col-span-6">Match</div>
-                <div className="col-span-1 text-center">1</div>
-                <div className="col-span-1 text-center">X</div>
-                <div className="col-span-1 text-center">2</div>
-                <div className="col-span-1 sm:col-span-2"></div>
-              </div>
-              {league.matches.map((match, index) => (
-                <div
-                  key={index}
-                  className="grid grid-cols-12 gap-4 px-4 py-3 border-b hover:bg-gray-50 transition-colors"
-                >
-                  <div className="col-span-2 sm:col-span-1 text-xs sm:text-sm text-gray-600 font-medium">
-                    {match.time}
-                  </div>
-                  <div className="col-span-6">
-                    <div className="flex items-center space-x-3 sm:space-x-3">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-6 h-6 hidden sm:block">
-                          <img
-                            src={match.home_logo}
-                            alt="Home Logo"
-                            className="w-full h-full object-cover-contain rounded-full"
-                          />
-                        </div>
-                        <div className="w-6 h-6 hidden sm:block">
-                          <img
-                            src={match.away_logo}
-                            alt="Away Logo"
-                            className="w-full h-full object-cover-contain rounded-full"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-medium text-xs sm:text-sm text-gray-900">
-                          {match.teams}
-                        </div>
-                        <div className="flex items-center space-x-2 text-xs text-gray-500">
-                          <div className="w-4 h-4 bg-gray-200 rounded-full"></div>
-                          <span>{match.competition}. {match.matchday}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-span-1 text-center">
-                    <span className="text-xs sm:text-sm font-bold text-blue-600">
-                      {match.odds['1']}
-                    </span>
-                  </div>
-                  <div className="col-span-1 text-center">
-                    <span className="text-xs sm:text-sm font-bold text-blue-600">
-                      {match.odds['X']}
-                    </span>
-                  </div>
-                  <div className="col-span-1 text-center">
-                    <span className="text-xs sm:text-sm font-bold text-blue-600">
-                      {match.odds['2']}
-                    </span>
-                  </div>
-                  <div className="col-span-1 sm:col-span-2 flex items-center justify-end"></div>
-                </div>
-              ))}
-            </div>
-            {/* Hot Offers Section */}
-            <div className="bg-white rounded-lg shadow-lg p-6 mt-6">
-              <h3 className="text-xl font-bold mb-4 text-gray-800">🔥 Today's Hot Offers</h3>
-              <div className="mb-4">
-                <div className="bg-gray-200 max-w-5xl mx-auto px-4 py-2 rounded">
-                  {offersData.offers.map((offer, index) => (
-                    <span
-                      key={index}
-                      className="cursor-pointer text-blue-600 font-semibold hover:underline"
-                      onClick={() => setSelectedOffer(offer)}
-                    >
-                      {offer.name}
-                      {index < offersData.offers.length - 1 && " / "}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              {/* Single card that updates on click */}
-              <div className="p-4 bg-white border border-gray-300 rounded-lg shadow-md">
-                <div className="flex items-start">
-                  <img
-                    src={selectedOffer.logo}
-                    alt={`${selectedOffer.name} Logo`}
-                    className="w-32 h-32 object-contain rounded-lg mr-6"
-                  />
-                  <p className="text-sm text-gray-600 leading-relaxed">{selectedOffer.description}</p>
-                </div>
-              </div>
-            </div>
-            {/* Recommended Odds Section */}
-            <div className="bg-white rounded-lg shadow-lg mt-6 overflow-hidden">
-              {/* Header */}
-              <div className="bg-gray-100 px-4 py-3">
-                <h3 className="text-lg font-bold text-gray-800">
-                  <span className="text-red-600">▶</span> RECOMMENDED ODDS
-                </h3>
-              </div>
-              {/* Table Header */}
-              <div className="grid grid-cols-12 gap-2 sm:gap-4 px-4 py-3 bg-gray-50 border-b text-xs sm:text-sm font-medium text-gray-500 uppercase">
-                <div className="col-span-6 sm:col-span-3">Match</div>
-                <div className="col-span-6 sm:col-span-3 text-center">Recommended Odd ▲</div>
-                <div className="hidden sm:block sm:col-span-3 text-center">Bookmaker ▲</div>
-                <div className="hidden sm:block sm:col-span-3 text-center">Starts In ▲</div>
-              </div>
-              {/* Table Rows */}
-              {recommendOdds.map((item, index) => (
-                <div
-                  key={index}
-                  className="grid grid-cols-12 gap-2 sm:gap-4 px-4 py-4 border-b hover:bg-gray-50 transition-colors items-center"
-                >
-                  {/* Match Column */}
-                  <div className="col-span-6 sm:col-span-3">
-                    <div className="flex items-center space-x-2">
-                      <div className="flex items-center space-x-1">
-                        <div className="w-6 h-6 flex-shrink-0">
-                          <img
-                            src={item.matchLogos?.[0] || '/placeholder-logo.jpg'}
-                            alt="Team 1 Logo"
-                            className="w-full h-full object-contain rounded-full"
-                          />
-                        </div>
-                        <div className="w-6 h-6 flex-shrink-0">
-                          <img
-                            src={item.matchLogos?.[1] || '/placeholder-logo.jpg'}
-                            alt="Team 2 Logo"
-                            className="w-full h-full object-contain rounded-full"
-                          />
-                        </div>
-                      </div>
-                      <div className="min-w-0">
-                        <div className="font-medium text-xs sm:text-sm text-gray-900 truncate">
-                          {item.match}
-                        </div>
-                        <div className="flex items-center space-x-1 text-xs text-gray-500">
-                          <div className="w-3 h-3 bg-gray-300 rounded-full flex-shrink-0"></div>
-                          <span className="truncate">{item.competition}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* Recommended Odd Column */}
-                  <div className="col-span-6 sm:col-span-3 text-center">
-                    <div className="flex items-center justify-center space-x-2">
-                      <div className="bg-red-600 text-white px-2 py-1 rounded text-sm font-bold min-w-[40px]">
-                        {item.recommendedOdd.value}
-                      </div>
-                      <div className="bg-green-600 text-white px-2 py-1 rounded text-xs font-medium">
-                        +
-                      </div>
-                    </div>
-                    <div className="text-xs text-gray-600 mt-1 truncate">
-                      {item.recommendedOdd.type}
-                    </div>
-                  </div>
-                  {/* Bookmaker Column */}
-                  <div className="hidden sm:block sm:col-span-3 text-center">
-                    <div className="flex flex-col items-center space-y-1">
-                      <div className="w-12 h-6 flex-shrink-0 flex justify-center">
-                        <img
-                          src={item.bookmaker?.logo || '/placeholder-logo.jpg'}
-                          alt={`${item.bookmaker?.name || 'Bookmaker'} Logo`}
-                          className="w-full h-full object-contain rounded"
-                        />
-                      </div>
-                      <div className="text-sm font-bold text-gray-900">
-                        {item.bookmaker.odd}
-                      </div>
-                    </div>
-                  </div>
-                  {/* Starts In Column */}
-                  <div className="hidden sm:block sm:col-span-3 text-center text-xs sm:text-sm text-gray-600">
-                    <div className="font-medium">
-                      {item.startsIn.split(' ').map((word, i) => (
-                        <div key={i} className="leading-tight">
-                          {word}
-                        </div>
-                      ))}
-                    </div>
+                  <div className="bg-teal-700 px-6 py-4 text-center">
+                    <div className="text-2xl font-bold mb-2">{league.betting_contest.prizes}</div>
+                    <button className="bg-white text-teal-700 font-bold py-2 px-6 rounded hover:bg-gray-100 transition-colors">
+                      {league.betting_contest.signup}
+                    </button>
                   </div>
                 </div>
-              ))}
-            </div>
-            {/* Top Sure Bets Section */}
-            <div className="bg-white rounded-lg shadow-lg mt-6 overflow-hidden">
-  {/* Header */}
-  <div className="bg-gray-100 px-4 py-3">
-    <h3 className="text-lg font-bold text-gray-800">
-      <span className="text-red-600">▶</span> TOP SURE BETS
-    </h3>
-  </div>
-  {/* Sport Tabs */}
-  <div className="bg-gray-600 px-4 py-2 overflow-x-auto">
-    <div className="flex space-x-1 min-w-max">
-      {Object.keys(topsureBets).map((sport, index) => (
-        <button
-          key={sport}
-          onClick={() => setSelectedSport(sport)}
-          className={`px-3 py-1 text-sm font-medium rounded transition-colors whitespace-nowrap ${
-            selectedSport === sport ? 'bg-red-600 text-white' : 'text-gray-200 hover:bg-gray-500'
-          }`}
-        >
-          {sport}
-        </button>
-      ))}
-    </div>
-  </div>
-  {/* Table Container with Horizontal Scroll */}
-  <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-    <div className="min-w-[600px]">
-      {/* Table Header */}
-      <div className="grid grid-cols-12 gap-2 sm:gap-4 px-4 py-3 bg-gray-50 border-b text-[10px] sm:text-sm font-medium text-gray-500 uppercase">
-        <div className="col-span-3">Date & Time ▲</div>
-        <div className="col-span-3 text-center">Type of Bet ▲</div>
-        <div className="col-span-4 text-center">Bookmakers</div>
-        <div className="col-span-2 text-center">Return ▼</div>
-      </div>
-      {/* Table Rows */}
-      {topsureBets[selectedSport]?.map((bet, index) => {
-        const date = new Date(bet.dateTime);
-        const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        const dateString = date.toDateString().includes(new Date().toDateString()) ? 'Today' : date.toLocaleDateString();
-        return (
-          <div
-            key={bet.id}
-            className="grid grid-cols-12 gap-2 sm:gap-4 px-4 py-4 border-b hover:bg-gray-50 transition-colors items-center"
-          >
-            {/* Date & Time + Teams Column */}
-            <div className="col-span-3">
-              <div className="text-[10px] sm:text-sm font-medium text-gray-900 mb-1">
-                {dateString}, {timeString}
+                <LiveScoreSection />
+                <EventsAndTables />
               </div>
-              <div className="flex items-center space-x-1">
-                <div className="flex items-center space-x-1 flex-shrink-0">
-                  <div className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0">
-                    <img
-                      src={bet.homeLogo || '/placeholder-logo.jpg'}
-                      alt="Home Team Logo"
-                      className="w-full h-full object-contain rounded-full"
-                    />
-                  </div>
-                  <div className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0">
-                    <img
-                      src={bet.awayLogo || '/placeholder-logo.jpg'}
-                      alt="Away Team Logo"
-                      className="w-full h-full object-contain rounded-full"
-                    />
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-[10px] sm:text-xs text-gray-700 truncate">
-                    {bet.homeTeam} – {bet.awayTeam}
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Type of Bet Column */}
-            <div className="col-span-3 text-center">
-              <div className="text-[10px] sm:text-sm font-medium text-gray-900">
-                {bet.typeOfBet}
-              </div>
-            </div>
-            {/* Bookmakers Column */}
-            <div className="col-span-4">
-              <div className="flex justify-center sm:justify-start items-center space-x-1 flex-wrap">
-                {bet.bookmakers.map((bookmaker, bmIndex) => (
-                  <div key={bmIndex} className="flex items-center space-x-1 min-w-[70px] sm:min-w-[80px] my-1">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0">
-                      <img
-                        src={bookmaker.logo || '/placeholder-logo.jpg'}
-                        alt={`${bookmaker.name} Logo`}
-                        className="w-full h-full object-contain rounded-full"
-                      />
-                    </div>
-                    <div className="text-[10px] sm:text-sm font-bold text-gray-900">
-                      {bookmaker.odds}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            {/* Return Column */}
-            <div className="col-span-2 text-center">
-              <div className="bg-red-600 text-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold inline-block">
-                {bet.returnPercent}
-              </div>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  </div>
-</div>
-          </div>
-          {/* Right Sidebar */}
-          <div className="md:col-span-4 lg:col-span-3">
-            <div className="sticky top-[120px]">
-              <div className="rounded-lg p-6 shadow-2xl">
-                <h4 className="text-lg text-black font-bold mb-2">Advertisement</h4>
-                <p className="text-sm text-black opacity-90 mb-4">Place your ad content here.</p>
-                <a href="https://example.com" target="_blank" rel="noopener noreferrer">
-                  <div className="w-full h-48 bg-gray-300 rounded flex items-center justify-center cursor-pointer">
-                    <span className="text-gray-500">Ad Image Placeholder</span>
-                  </div>
-                </a>
-                <a href="https://example.com" target="_blank" rel="noopener noreferrer">
-                  <button className="w-full bg-white text-blue-600 font-bold py-2 px-4 rounded hover:bg-gray-100 transition-colors mt-4">
-                    Click Here
-                  </button>
-                </a>
-              </div>
-              {/* Betting Contest */}
-              <div className="bg-teal-600 rounded-lg text-white overflow-hidden shadow-lg text-sm leading-tight mt-6">
-                <div className="bg-teal-700 px-6 py-4 text-center">
-                  <div className="w-10 h-10 mx-auto mb-2">
-                    <img src="/contest-logo.jpg" alt="Contest Logo" className="w-full h-full object-contain rounded-full" />
-                  </div>
-                  <h3 className="font-bold text-lg">{league.betting_contest.title}</h3>
-                  <p className="text-sm opacity-90">{league.betting_contest.subtitle}</p>
-                </div>
-                <div className="p-3">
-                  {league.betting_contest.ranking.map((user, index) => (
-                    <div key={index} className="flex items-center justify-between py-3 border-b border-teal-500/30 last:border-b-0">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 flex items-center justify-center">
-                          <span className="text-2xl font-bold">{user.position}</span>
-                        </div>
-                        <div className="w-10 h-10">
-                          <img src={user.flag || '/placeholder-logo.jpg'} alt="User Flag" className="w-full h-full object-contain rounded-full" />
-                        </div>
-                        <div>
-                          <div className="font-medium text-sm">{user.username}</div>
-                          {user.country && (
-                            <div className="text-xs opacity-75 flex items-center space-x-1">
-                              <span>🇺🇦</span>
-                              <span>{user.country}</span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold mb-1">
-                          {user.prize}
-                        </div>
-                        <div className="text-xs opacity-90">{user.points.toLocaleString()}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="bg-teal-700 px-6 py-4 text-center">
-                  <div className="text-2xl font-bold mb-2">{league.betting_contest.prizes}</div>
-                  <button className="bg-white text-teal-700 font-bold py-2 px-6 rounded hover:bg-gray-100 transition-colors">
-                    {league.betting_contest.signup}
-                  </button>
-                </div>
-              </div>
-
-              <LiveScoreSection />
-              <EventsAndTables />
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
-
 export default HomePage;
-

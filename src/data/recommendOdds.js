@@ -14,6 +14,7 @@ const recommendOdds = [
     },
     bookmaker: {
       name: "BETANDYOU",
+      website:"https://1xbit1.com",
       logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6o13MNX3H_rksUp4QeQrTtEhdJVy0K9jZeA&s",
       odd: "1.78"
     },
@@ -32,6 +33,7 @@ const recommendOdds = [
     },
     bookmaker: {
       name: "PARIPESA",
+      website:"https://1xbit1.com",
       logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6o13MNX3H_rksUp4QeQrTtEhdJVy0K9jZeA&s",
       odd: "1.64"
     },
@@ -50,6 +52,7 @@ const recommendOdds = [
     },
     bookmaker: {
       name: "BETANDYOU",
+      website:"https://1xbit1.com",
       logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6o13MNX3H_rksUp4QeQrTtEhdJVy0K9jZeA&s",
       odd: "1.54"
     },
@@ -68,6 +71,7 @@ const recommendOdds = [
     },
     bookmaker: {
       name: "BETANDYOU",
+      website:"https://1xbit1.com",
       logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6o13MNX3H_rksUp4QeQrTtEhdJVy0K9jZeA&s",
       odd: "1.54"
     },
@@ -86,6 +90,7 @@ const recommendOdds = [
     },
     bookmaker: {
       name: "PIN-UP",
+      website:"https://1xbit1.com",
       logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6o13MNX3H_rksUp4QeQrTtEhdJVy0K9jZeA&s",
       odd: "1.54"
     },

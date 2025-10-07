@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /scripts/
+Disallow: /login/
+Disallow: /signup/
+Allow: /
+Sitemap: https://watchdogs.net/sitemap.xml
