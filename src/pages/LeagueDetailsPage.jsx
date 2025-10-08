@@ -655,9 +655,12 @@ const LeagueDetailsPage = () => {
                   </div>
                   <div className="bg-teal-700 px-6 py-4 text-center">
                     <div className="text-2xl font-bold mb-2">Total Prizes: $10,000</div>
-                    <button className="bg-white text-teal-700 font-bold py-2 px-6 rounded hover:bg-gray-100 transition-colors">
-                      Join Now
-                    </button>
+                    <button 
+  className="bg-white text-teal-700 font-bold py-2 px-6 rounded hover:bg-gray-100 transition-colors" 
+  onClick={() => navigate('/signup')}
+>
+  Join Now
+</button>
                   </div>
                 </div>
                 <LiveScoreSection />

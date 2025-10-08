@@ -394,9 +394,9 @@ const TipsPage = () => {
                   </div>
                   <div className="bg-teal-700 px-6 py-4 text-center">
                     <div className="text-2xl font-bold mb-2">{league.betting_contest.prizes}</div>
-                    <button className="bg-white text-teal-700 font-bold py-2 px-6 rounded hover:bg-gray-100 transition-colors">
-                      {league.betting_contest.signup}
-                    </button>
+                    <button className="bg-white text-teal-700 font-bold py-2 px-6 rounded hover:bg-gray-100 transition-colors" onClick={() => navigate('/signup')}>
+  {league.betting_contest.signup}
+</button>
                   </div>
                 </div>
                 <LiveScoreSection />
