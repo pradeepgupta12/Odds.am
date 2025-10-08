@@ -66,7 +66,7 @@ export default function Navbar() {
           <div className="flex items-center space-x-4">
             {/* Hamburger Menu */}
             <button 
-              className="lg:hidden"
+              className="md:hidden"
               onClick={toggleMobileMenu}
             >
               {isMobileMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
@@ -111,7 +111,7 @@ export default function Navbar() {
           {/* Right Section */}
           <div className="flex items-center space-x-2">
             {/* Search Bar (Tablet) */}
-            <div className="hidden sm:flex lg:hidden relative">
+            <div className="hidden md:flex lg:hidden relative">
               <input 
                 type="text" 
                 placeholder="Search" 
@@ -119,10 +119,10 @@ export default function Navbar() {
               />
             </div>
 
-            {/* Auth Dropdown Toggle (Mobile and Tablet) */}
-            <div className="lg:hidden relative">
+            {/* Auth Dropdown Toggle (Mobile) */}
+            <div className="md:hidden relative">
               <button 
-                className="lg:hidden"
+                className="md:hidden"
                 onClick={toggleAuthDropdown}
               >
                 <User className="w-8 h-8" />
@@ -150,8 +150,8 @@ export default function Navbar() {
               <div className="text-base text-gray-300 w-32 truncate">{truncateOffer(selectedGame.offer)}</div>
             </div>
 
-            {/* Auth Buttons (Desktop) */}
-            <div className="hidden lg:flex items-center space-x-0.5">
+            {/* Auth Buttons (Tablet and Desktop) */}
+            <div className="hidden md:flex items-center space-x-0.5">
               <Link to="/login" className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-base font-semibold">
                 Login
               </Link>
@@ -167,22 +167,22 @@ export default function Navbar() {
       <div className="bg-gray-800 px-4 py-3 h-14">
         <div className="max-w-7xl mx-auto h-full flex items-center justify-between">
           {/* Navigation Links */}
-          <div className="hidden lg:flex items-center space-x-2 h-full">
-            <Link to="/live-odds" className="text-white hover:text-red-400 font-semibold text-lg">LIVE ODDS</Link>
-            <span className="text-gray-500 text-lg">/</span>
-            <Link to="/Upcoming-match" className="text-white hover:text-red-400 font-semibold text-lg">UPCOMING MATCHES</Link>
-            <span className="text-gray-500 text-lg">/</span>
-            <Link to="/Betting-contest" className="text-white hover:text-red-400 font-semibold text-lg">BETTING CONTEST</Link>
-            <span className="text-gray-500 text-lg">/</span>
-            <Link to="/Sure-bets" className="text-white hover:text-red-400 font-semibold text-lg">SURE BETS</Link>
-            <span className="text-gray-500 text-lg">/</span>
-            <Link to="/Book-maker" className="text-white hover:text-red-400 font-semibold text-lg">BOOKMAKERS</Link>
-            <span className="text-gray-500 text-lg">/</span>
-            <Link to="/Result" className="text-white hover:text-red-400 font-semibold text-lg">RESULTS</Link>
-            <span className="text-gray-500 text-lg">/</span>
-            <Link to="/Tips" className="text-white hover:text-red-400 font-semibold text-lg">TIPS</Link>
-            <span className="text-gray-500 text-lg">/</span>
-            <Link to="/Faq" className="text-white hover:text-red-400 font-semibold text-lg">FAQ</Link>
+          <div className="hidden md:flex items-center space-x-1 h-full flex-1 justify-center lg:justify-start">
+            <Link to="/live-odds" className="text-white hover:text-red-400 font-semibold text-sm lg:text-base whitespace-nowrap">LIVE ODDS</Link>
+            <span className="text-gray-500 text-sm lg:text-base">/</span>
+            <Link to="/Upcoming-match" className="text-white hover:text-red-400 font-semibold text-sm lg:text-base whitespace-nowrap">UPCOMING MATCHES</Link>
+            <span className="text-gray-500 text-sm lg:text-base">/</span>
+            <Link to="/Betting-contest" className="text-white hover:text-red-400 font-semibold text-sm lg:text-base whitespace-nowrap">BETTING CONTEST</Link>
+            <span className="text-gray-500 text-sm lg:text-base">/</span>
+            <Link to="/Sure-bets" className="text-white hover:text-red-400 font-semibold text-sm lg:text-base whitespace-nowrap">SURE BETS</Link>
+            <span className="text-gray-500 text-sm lg:text-base">/</span>
+            <Link to="/Book-maker" className="text-white hover:text-red-400 font-semibold text-sm lg:text-base whitespace-nowrap">BOOKMAKERS</Link>
+            <span className="text-gray-500 text-sm lg:text-base">/</span>
+            <Link to="/Result" className="text-white hover:text-red-400 font-semibold text-sm lg:text-base whitespace-nowrap">RESULTS</Link>
+            <span className="text-gray-500 text-sm lg:text-base">/</span>
+            <Link to="/Tips" className="text-white hover:text-red-400 font-semibold text-sm lg:text-base whitespace-nowrap">TIPS</Link>
+            <span className="text-gray-500 text-sm lg:text-base">/</span>
+            <Link to="/Faq" className="text-white hover:text-red-400 font-semibold text-sm lg:text-base whitespace-nowrap">FAQ</Link>
           </div>
 
           {/* Search Bar (Mobile and Desktop) */}
@@ -198,7 +198,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-gray-800 text-white pt-4 w-screen fixed top-[88px] left-0 z-50 shadow-lg">
+        <div className="md:hidden bg-gray-800 text-white pt-4 w-screen fixed top-[88px] left-0 z-50 shadow-lg">
           <div className="px-4">
             <div className="flex flex-col space-y-2">
               <Link to="/live-odds" className="text-white hover:text-red-400 font-semibold text-lg py-2" onClick={closeMobileMenu}>LIVE ODDS</Link>
